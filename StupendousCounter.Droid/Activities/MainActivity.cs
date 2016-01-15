@@ -1,3 +1,4 @@
+using System.IO;
 using Android.App;
 using Android.Content.PM;
 using Android.Content.Res;
@@ -10,6 +11,7 @@ using StupendousCounter.Droid.Fragments;
 using Android.Support.V7.App;
 using Android.Support.V4.View;
 using Android.Support.Design.Widget;
+using StupendousCounter.Core;
 
 namespace StupendousCounter.Droid.Activities
 {
@@ -31,6 +33,10 @@ namespace StupendousCounter.Droid.Activities
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+
+            var path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+            var dbPath = Path.Combine(path, "counters.db3");
+            DatabaseHelper.CreateDatabase(dbPath);
 
 
             drawerLayout = this.FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
