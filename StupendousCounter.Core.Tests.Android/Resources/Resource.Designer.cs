@@ -26,6 +26,8 @@ namespace StupendousCounter.Core.Tests.Android
 		
 		public static void UpdateIdValues()
 		{
+			global::GalaSoft.MvvmLight.Resource.String.ApplicationName = global::StupendousCounter.Core.Tests.Android.Resource.String.ApplicationName;
+			global::GalaSoft.MvvmLight.Resource.String.Hello = global::StupendousCounter.Core.Tests.Android.Resource.String.Hello;
 			global::Xamarin.Android.NUnitLite.Resource.Id.OptionHostName = global::StupendousCounter.Core.Tests.Android.Resource.Id.OptionHostName;
 			global::Xamarin.Android.NUnitLite.Resource.Id.OptionPort = global::StupendousCounter.Core.Tests.Android.Resource.Id.OptionPort;
 			global::Xamarin.Android.NUnitLite.Resource.Id.OptionRemoteServer = global::StupendousCounter.Core.Tests.Android.Resource.Id.OptionRemoteServer;

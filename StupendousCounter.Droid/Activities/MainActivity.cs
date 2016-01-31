@@ -1,4 +1,6 @@
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content.PM;
 using Android.Content.Res;
@@ -30,14 +32,17 @@ namespace StupendousCounter.Droid.Activities
             }
         }
 
-        protected override void OnCreate(Bundle savedInstanceState)
+        protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
             var path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             var dbPath = Path.Combine(path, "counters.db3");
             DatabaseHelper.CreateDatabase(dbPath);
-
+            
+#if DEBUG
+            await AddDummyData();
+#endif
 
             drawerLayout = this.FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
 
@@ -73,6 +78,30 @@ namespace StupendousCounter.Droid.Activities
             if (savedInstanceState == null)
             {
                 ListItemClicked(0);
+            }
+        }
+
+        private static async Task AddDummyData()
+        {
+            var dbHelper = new DatabaseHelper();
+            if (!(await dbHelper.GetAllCountersAsync()).Any())
+            {
+                var counter1 = new Counter
+                {
+                    Name = "Monkey Count",
+                    Description = "The number of monkeys",
+                    Value = 10
+                };
+
+                var counter2 = new Counter
+                {
+                    Name = "Playtpus Count",
+                    Description = "The number of duck-billed platypuses",
+                    Value = 4
+                };
+
+                await dbHelper.AddOrUpdateCounterAsync(counter1);
+                await dbHelper.AddOrUpdateCounterAsync(counter2);
             }
         }
 
