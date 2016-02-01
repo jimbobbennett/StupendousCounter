@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardElevation="8dp"
+    card_view:cardCornerRadius="8dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="8dp">
+    <GridLayout
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="3"
+        android:rowCount="1">
+        <TextView
+            android:id="@+id/counter_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:textSize="48sp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="16sp"
+            android:textColor="@color/primaryDark" />
+        <ImageButton
+            android:id="@+id/counter_increment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="2"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="16sp"
+            android:src="@drawable/ic_add_circle_black_48dp"
+            android:background="#00000000" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_gravity="fill"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:padding="16sp">
+            <TextView
+                android:id="@+id/counter_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:padding="4sp"
+                android:textSize="24sp"
+                android:textColor="@color/primaryText" />
+            <TextView
+                android:id="@+id/counter_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="The counters description"
+                android:padding="4sp"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </GridLayout>
+</android.support.v7.widget.CardView>

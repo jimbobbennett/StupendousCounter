@@ -3,17 +3,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content.PM;
-using Android.Content.Res;
 using Android.OS;
 using Android.Support.V4.Widget;
 using Android.Views;
-using Android.Widget;
-
 using StupendousCounter.Droid.Fragments;
-using Android.Support.V7.App;
-using Android.Support.V4.View;
 using Android.Support.Design.Widget;
 using StupendousCounter.Core;
+using StupendousCounter.Core.ViewModel;
 
 namespace StupendousCounter.Droid.Activities
 {
@@ -39,10 +35,12 @@ namespace StupendousCounter.Droid.Activities
             var path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             var dbPath = Path.Combine(path, "counters.db3");
             DatabaseHelper.CreateDatabase(dbPath);
-            
+
 #if DEBUG
             await AddDummyData();
 #endif
+
+            await ViewModelLocator.Counters.LoadCountersAsync();
 
             drawerLayout = this.FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
 
@@ -59,17 +57,14 @@ namespace StupendousCounter.Droid.Activities
 
                 switch (e.MenuItem.ItemId)
                 {
-                    case Resource.Id.nav_home_1:
+                    case Resource.Id.nav_counters:
                         ListItemClicked(0);
                         break;
-                    case Resource.Id.nav_home_2:
+                    case Resource.Id.nav_about:
                         ListItemClicked(1);
                         break;
                 }
-
-                Snackbar.Make(drawerLayout, "You selected: " + e.MenuItem.TitleFormatted, Snackbar.LengthLong)
-                    .Show();
-
+                
                 drawerLayout.CloseDrawers();
             };
 
@@ -80,7 +75,7 @@ namespace StupendousCounter.Droid.Activities
                 ListItemClicked(0);
             }
         }
-
+        
         private static async Task AddDummyData()
         {
             var dbHelper = new DatabaseHelper();
@@ -118,10 +113,10 @@ namespace StupendousCounter.Droid.Activities
             switch (position)
             {
                 case 0:
-                    fragment = Fragment1.NewInstance();
+                    fragment = CountersFragment.NewInstance();
                     break;
                 case 1:
-                    fragment = Fragment2.NewInstance();
+                    fragment = AboutFragment.NewInstance();
                     break;
             }
 
