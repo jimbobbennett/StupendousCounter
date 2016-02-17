@@ -1,5 +1,7 @@
 # StupendousCounter
 
+[![Build Status](https://www.bitrise.io/app/971f03a10023caa0.svg?token=jObxyubFW3_cZblJfg4Ojw)](https://www.bitrise.io/app/971f03a10023caa0)
+
 Simple Android Counter app
 
 The creation of this app is described in the following blog posts:
