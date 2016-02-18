@@ -1,3 +1,4 @@
+using System.Collections.Specialized;
 using Android.Support.V7.Widget;
 using Android.Views;
 using StupendousCounter.Core.ViewModel;
@@ -6,6 +7,16 @@ namespace StupendousCounter.Droid.Fragments
 {
     public class CountersAdapter : RecyclerView.Adapter
     {
+        public CountersAdapter()
+        {
+            ((INotifyCollectionChanged)ViewModelLocator.Counters.Counters).CollectionChanged += OnCollectionChanged;
+        }
+
+        private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        {
+            NotifyDataSetChanged();
+        }
+
         public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
         {
             var item = ViewModelLocator.Counters.Counters[position];

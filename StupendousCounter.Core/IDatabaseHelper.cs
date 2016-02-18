@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace StupendousCounter.Core
@@ -9,5 +10,7 @@ namespace StupendousCounter.Core
         Task IncrementCounterAsync(Counter counter);
         Task<IEnumerable<Counter>> GetAllCountersAsync();
         Task<IEnumerable<CounterIncrementHistory>> GetCounterHistory(int counterId);
+
+        event EventHandler CountersChanged;
     }
 }
