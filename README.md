@@ -13,3 +13,5 @@ http://www.jimbobbennett.io/building-an-android-app-part-2/
 http://www.jimbobbennett.io/building-a-xamarin-android-app-part-3/
 
 http://www.jimbobbennett.io/building-a-xamarin-android-app-part-4/
+
+http://www.jimbobbennett.io/building-a-xamarin-android-app-part-5/
