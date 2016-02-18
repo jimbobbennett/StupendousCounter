@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
     <android.support.v7.widget.RecyclerView
@@ -9,4 +9,14 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@color/divider" />
-</LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingAddNewCounterButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        android:elevation="4dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_add_white_24dp"
+        app:borderWidth="0dp" />
+</FrameLayout>

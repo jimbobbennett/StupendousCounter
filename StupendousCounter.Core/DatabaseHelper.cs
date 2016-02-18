@@ -27,6 +27,8 @@ namespace StupendousCounter.Core
                 await connection.InsertAsync(counter);
             else
                 await connection.InsertOrReplaceAsync(counter);
+
+            OnCountersChanged();
         }
 
         public async Task IncrementCounterAsync(Counter counter)
@@ -54,6 +56,13 @@ namespace StupendousCounter.Core
         {
             var connection = new SQLiteAsyncConnection(_dbPath);
             return await connection.Table<CounterIncrementHistory>().Where(c => c.CounterId == counterId).ToListAsync();
+        }
+
+        public event EventHandler CountersChanged;
+
+        private void OnCountersChanged()
+        {
+            CountersChanged?.Invoke(this, new EventArgs());
         }
     }
 }

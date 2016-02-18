@@ -41,6 +41,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\CountersViewModel.cs" />
     <Compile Include="ViewModel\CounterViewModel.cs" />
+    <Compile Include="ViewModel\NewCounterViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
   </ItemGroup>
   <ItemGroup>
