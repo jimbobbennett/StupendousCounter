@@ -145,7 +145,9 @@
     <AndroidResource Include="Resources\drawable-mdpi\Icon.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\Icon.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\Icon.png" />
-    <AndroidResource Include="Resources\menu\nav_menu.xml" />
+    <AndroidResource Include="Resources\menu\nav_menu.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
     <AndroidResource Include="Resources\drawable-hdpi\ic_menu.png" />
     <AndroidResource Include="Resources\drawable-mdpi\ic_menu.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\ic_menu.png" />
@@ -165,6 +167,12 @@
     <AndroidResource Include="Resources\drawable-xhdpi\ic_add_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-mdpi\ic_add_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-hdpi\ic_add_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_done_white_48dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_done_white_48dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_done_white_48dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_done_white_48dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_done_white_48dp.png" />
+    <AndroidResource Include="Resources\menu\new_counter_menu.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StupendousCounter.Core\StupendousCounter.Core.csproj">
