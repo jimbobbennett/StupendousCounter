@@ -20,10 +20,7 @@ namespace StupendousCounter.Droid.Activities
 
         private EditText _description;
         public EditText Description => _description ?? (_description = FindViewById<EditText>(Resource.Id.new_counter_description));
-
-        private Button _createCounter;
-        public Button CreateCounter => _createCounter ?? (_createCounter = FindViewById<Button>(Resource.Id.new_counter_create));
-
+        
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -39,21 +36,32 @@ namespace StupendousCounter.Droid.Activities
         {
             _bindings.Add(this.SetBinding(() => ViewModel.Name, () => Name.Text, BindingMode.TwoWay));
             _bindings.Add(this.SetBinding(() => ViewModel.Description, () => Description.Text, BindingMode.TwoWay));
-
-            CreateCounter.SetCommand(nameof(Button.Click), ViewModel.AddCounterCommand);
         }
 
         protected override int LayoutResource => Resource.Layout.new_counter;
 
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            base.OnCreateOptionsMenu(menu);
+
+            Toolbar.InflateMenu(Resource.Menu.new_counter_menu);
+            
+            return true;
+        }
+
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
-            if (item.ItemId == Android.Resource.Id.Home)
+            switch (item.ItemId)
             {
-                ViewModel.GoBackCommand.Execute(null);
-                return true;
+                case Android.Resource.Id.Home:
+                    ViewModel.GoBackCommand.Execute(null);
+                    return true;
+                case Resource.Id.action_create_counter:
+                    ViewModel.AddCounterCommand.Execute(null);
+                    return true;
+                default:
+                    return base.OnOptionsItemSelected(item);
             }
-
-            return base.OnOptionsItemSelected(item);
         }
     }
 }

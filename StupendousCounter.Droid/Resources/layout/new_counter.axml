@@ -38,10 +38,5 @@
                 android:layout_height="wrap_content"
                 android:hint="Description" />
         </android.support.design.widget.TextInputLayout>
-        <Button
-            android:text="Create Counter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/new_counter_create" />
     </LinearLayout>
 </LinearLayout>
