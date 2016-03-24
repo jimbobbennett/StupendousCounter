@@ -14,6 +14,7 @@ namespace StupendousCounter.Core.Tests.ViewModel
     {
         private Mock<IDatabaseHelper> _mockDatabaseHelper;
         private Mock<INavigationService> _mockNavigationService;
+        private Mock<IDialogService> _mockDialogService;
 
         private readonly Counter _monkeyCounter = new Counter
         {
@@ -41,13 +42,14 @@ namespace StupendousCounter.Core.Tests.ViewModel
         {
             _mockDatabaseHelper = new Mock<IDatabaseHelper>();
             _mockNavigationService = new Mock<INavigationService>();
+            _mockDialogService = new Mock<IDialogService>();
         }
 
         [Test]
         public async Task LoadCountersAsyncShouldLoadTheCountersFromTheDatabase()
         {
             _mockDatabaseHelper.Setup(d => d.GetAllCountersAsync()).ReturnsAsync(new List<Counter> { _monkeyCounter, _platypusCounter });
-            var vm = new CountersViewModel(_mockDatabaseHelper.Object, _mockNavigationService.Object);
+            var vm = new CountersViewModel(_mockDatabaseHelper.Object, _mockNavigationService.Object, _mockDialogService.Object);
             await vm.LoadCountersAsync();
             vm.Counters.Should().HaveCount(2);
             vm.Counters.Should().Contain(c => Matches(c, _monkeyCounter));
@@ -58,7 +60,7 @@ namespace StupendousCounter.Core.Tests.ViewModel
         public async Task LoadCountersAsyncShouldClearBeforeLoadingTheCountersFromTheDatabase()
         {
             _mockDatabaseHelper.Setup(d => d.GetAllCountersAsync()).ReturnsAsync(new List<Counter> { _monkeyCounter, _platypusCounter });
-            var vm = new CountersViewModel(_mockDatabaseHelper.Object, _mockNavigationService.Object);
+            var vm = new CountersViewModel(_mockDatabaseHelper.Object, _mockNavigationService.Object, _mockDialogService.Object);
 
             await vm.LoadCountersAsync();
             vm.Counters.Should().HaveCount(2);
@@ -74,7 +76,7 @@ namespace StupendousCounter.Core.Tests.ViewModel
         [Test]
         public void ExecutingAddNewCounterCommandShouldNavigateToTheNewCounterActivity()
         {
-            var vm = new CountersViewModel(_mockDatabaseHelper.Object, _mockNavigationService.Object);
+            var vm = new CountersViewModel(_mockDatabaseHelper.Object, _mockNavigationService.Object, _mockDialogService.Object);
             vm.AddNewCounterCommand.Execute(null);
             _mockNavigationService.Verify(n => n.NavigateTo(ViewModelLocator.NewCounterPageKey), Times.Once);
         }
@@ -82,7 +84,7 @@ namespace StupendousCounter.Core.Tests.ViewModel
         [Test]
         public void CountersChangingInTheDatabaseShouldReloadTheCounters()
         {
-            var vm = new CountersViewModel(_mockDatabaseHelper.Object, _mockNavigationService.Object);
+            var vm = new CountersViewModel(_mockDatabaseHelper.Object, _mockNavigationService.Object, _mockDialogService.Object);
             _mockDatabaseHelper.Raise(d => d.CountersChanged += null, new EventArgs());
             _mockDatabaseHelper.Verify(d => d.GetAllCountersAsync(), Times.Once);
             GC.KeepAlive(vm);

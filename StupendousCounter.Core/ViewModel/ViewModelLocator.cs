@@ -12,7 +12,6 @@ namespace StupendousCounter.Core.ViewModel
 
             SimpleIoc.Default.Register<IDatabaseHelper>(() => new DatabaseHelper());
             SimpleIoc.Default.Register<CountersViewModel>();
-            SimpleIoc.Default.Register<NewCounterViewModel>();
         }
 
         public static void RegisterNavigationService(INavigationService navigationService)
@@ -26,8 +25,11 @@ namespace StupendousCounter.Core.ViewModel
         }
 
         public const string NewCounterPageKey = "NewCounterPage";
+        public const string EditCounterPageKey = "EditCounterPage";
 
         public static CountersViewModel Counters => ServiceLocator.Current.GetInstance<CountersViewModel>();
-        public static NewCounterViewModel NewCounter => ServiceLocator.Current.GetInstance<NewCounterViewModel>();
+        public static INavigationService NavigationService => ServiceLocator.Current.GetInstance<INavigationService>();
+        public static IDatabaseHelper DatabaseHelper => ServiceLocator.Current.GetInstance<IDatabaseHelper>();
+        public static IDialogService DialogService => ServiceLocator.Current.GetInstance<IDialogService>();
     }
 }

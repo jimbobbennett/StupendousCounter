@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
+using FluentAssertions.Events;
 using Java.Lang;
 using NUnit.Framework;
 
@@ -267,6 +268,72 @@ namespace StupendousCounter.Core.Tests.Android
             history.Count.Should().Be(1);
             history[0].CounterId.Should().Be(counter1.Id);
             history[0].IncrementDateTimeUtc.Should().BeOnOrAfter(now).And.BeBefore(DateTime.UtcNow);
+        }
+
+        [Test]
+        public void DeletingACounterShouldDeleteTheCounter()
+        {
+            var dbfile = Path.Combine(RootPath, Guid.NewGuid().ToString("N") + ".db3");
+
+            DatabaseHelper.CreateDatabase(dbfile);
+
+            var db = new DatabaseHelper();
+            var counter = new Counter
+            {
+                Name = "TestCounter",
+                Description = "A test counter"
+            };
+
+            var res = Task.Run(async () =>
+            {
+                await db.AddOrUpdateCounterAsync(counter);
+                return 0;
+            }).Result;
+
+            var counters = Task.Run(async () => await db.GetAllCountersAsync()).Result;
+
+            counters.Should().HaveCount(1);
+
+            res = Task.Run(async () =>
+            {
+                await db.DeleteCounterAsync(counter);
+                return 0;
+            }).Result;
+
+            counters = Task.Run(async () => await db.GetAllCountersAsync()).Result;
+            counters.Should().HaveCount(0);
+        }
+
+        [Test]
+        public void DeletingACounterShouldRaiseTheCollectionChangedEvent()
+        {
+            var dbfile = Path.Combine(RootPath, Guid.NewGuid().ToString("N") + ".db3");
+
+            DatabaseHelper.CreateDatabase(dbfile);
+
+            var db = new DatabaseHelper();
+            var counter = new Counter
+            {
+                Name = "TestCounter",
+                Description = "A test counter"
+            };
+
+            var res = Task.Run(async () =>
+            {
+                await db.AddOrUpdateCounterAsync(counter);
+                return 0;
+            }).Result;
+
+            var eventRecorder = new EventRecorder(db, nameof(DatabaseHelper.CountersChanged));
+            eventRecorder.RecordEvent();
+            
+            res = Task.Run(async () =>
+            {
+                await db.DeleteCounterAsync(counter);
+                return 0;
+            }).Result;
+
+            eventRecorder.Should().HaveCount(1);
         }
     }
 }

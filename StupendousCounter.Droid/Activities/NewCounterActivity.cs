@@ -4,6 +4,7 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 using GalaSoft.MvvmLight.Helpers;
+using StupendousCounter.Core;
 using StupendousCounter.Core.ViewModel;
 
 namespace StupendousCounter.Droid.Activities
@@ -11,7 +12,7 @@ namespace StupendousCounter.Droid.Activities
     [Activity(Label = "New Counter")]
     public class NewCounterActivity : BaseActivity
     {
-        public NewCounterViewModel ViewModel { get; private set; }
+        public CounterViewModel ViewModel { get; private set; }
 
         private readonly List<Binding> _bindings = new List<Binding>();
 
@@ -24,12 +25,18 @@ namespace StupendousCounter.Droid.Activities
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            
-            ViewModel = ViewModelLocator.NewCounter;
-            ViewModel.Name = string.Empty;
-            ViewModel.Description = string.Empty;
+
+            ViewModel = GetCounterViewModel();
 
             Bind();
+        }
+
+        protected virtual CounterViewModel GetCounterViewModel()
+        {
+            return new CounterViewModel(new Counter(),
+                ViewModelLocator.DatabaseHelper,
+                ViewModelLocator.DialogService,
+                ViewModelLocator.NavigationService);
         }
 
         private void Bind()
@@ -56,8 +63,8 @@ namespace StupendousCounter.Droid.Activities
                 case Android.Resource.Id.Home:
                     ViewModel.GoBackCommand.Execute(null);
                     return true;
-                case Resource.Id.action_create_counter:
-                    ViewModel.AddCounterCommand.Execute(null);
+                case Resource.Id.action_save_counter:
+                    ViewModel.SaveCommand.Execute(null);
                     return true;
                 default:
                     return base.OnOptionsItemSelected(item);

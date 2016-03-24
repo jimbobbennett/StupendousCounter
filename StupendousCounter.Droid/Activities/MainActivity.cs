@@ -19,6 +19,7 @@ namespace StupendousCounter.Droid.Activities
         {
             var navigationService = new AppCompatNavigationService();
             navigationService.Configure(ViewModelLocator.NewCounterPageKey, typeof(NewCounterActivity));
+            navigationService.Configure(ViewModelLocator.EditCounterPageKey, typeof(EditCounterActivity));
             ViewModelLocator.RegisterNavigationService(navigationService);
             ViewModelLocator.RegisterDialogService(new AppCompatDialogService());
         }
