@@ -7,7 +7,8 @@
     card_view:cardCornerRadius="8dp"
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
-    android:layout_marginTop="8dp">
+    android:layout_marginTop="8dp"
+    android:foreground="?android:attr/selectableItemBackground">
     <GridLayout
         android:minWidth="25px"
         android:minHeight="25px"

@@ -19,7 +19,7 @@ namespace StupendousCounter.Core
                 connection.CreateTable<CounterIncrementHistory>();
             }
         }
-        
+
         public async Task AddOrUpdateCounterAsync(Counter counter)
         {
             var connection = new SQLiteAsyncConnection(_dbPath);
@@ -27,6 +27,14 @@ namespace StupendousCounter.Core
                 await connection.InsertAsync(counter);
             else
                 await connection.InsertOrReplaceAsync(counter);
+
+            OnCountersChanged();
+        }
+
+        public async Task DeleteCounterAsync(Counter counter)
+        {
+            var connection = new SQLiteAsyncConnection(_dbPath);
+            await connection.DeleteAsync(counter);
 
             OnCountersChanged();
         }

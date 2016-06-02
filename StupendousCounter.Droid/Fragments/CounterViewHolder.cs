@@ -27,6 +27,13 @@ namespace StupendousCounter.Droid.Fragments
             var increment = itemView.FindViewById<ImageButton>(Resource.Id.counter_increment);
             increment.SetColorFilter(new Color(ContextCompat.GetColor(Application.Context, Resource.Color.primaryDark)));
             increment.Click += IncrementOnClick;
+
+            itemView.LongClick += ItemLongClick;
+        }
+
+        private void ItemLongClick(object sender, View.LongClickEventArgs e)
+        {
+            _counterViewModel.EditCommand.Execute(null);
         }
 
         private void IncrementOnClick(object sender, EventArgs eventArgs)
